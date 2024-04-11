@@ -2,6 +2,7 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
+const bodyParser = require('body-parser');
 const errorHandler = require('./middleware/error.js');
 const connectDB = require('./config/db.js');
 
@@ -12,10 +13,12 @@ dotenv.config({ path: './config/config.env' });
 connectDB();
 
 // Route files
-const user = require('./routes/user.js');
-
+const user = require('./routes/auth.js');
 
 const app = express();
+
+//Parse JSON bodies for POST requests
+app.use(bodyParser.json());
 
 // Dev logging middleware
 if(process.env.NODE_ENV === 'development'){

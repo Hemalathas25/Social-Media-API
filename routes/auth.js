@@ -1,14 +1,17 @@
 const express = require('express');
 
 const {
+    register,
     getAllUser,
     getOneUser,
     createUser,
     updateUser,
     deleteUser
-} = require('../controllers/user.js');
+} = require('../controllers/auth.js');
 
 const router = express.Router();
+
+router.post('/', register);
 
 router
  .route('/')
