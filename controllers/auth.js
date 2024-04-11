@@ -10,7 +10,7 @@ const User = require('../models/user.js');
  */
 
 exports.register =  asyncHandler(async (req, res, next) => {
-    const { name, email, password, gender, dateOfBirth } = req.body;
+    const { name, email, username, password, gender, dateOfBirth } = req.body;
 
     console.log("Password:", password); // Check the value of password
 
@@ -26,11 +26,16 @@ exports.register =  asyncHandler(async (req, res, next) => {
     const user = await User.create({
         name,
         email,
+        username,
         password: hashedPassword, // Store hashed password in the database
         gender, 
         dateOfBirth
     });
-    res.status(200).json({ success: true });
+
+    // Create Token
+    const token = user.getSignedJwtToken();
+
+    res.status(200).json({ success: true, token });
 });
 
 /**   
