@@ -2,6 +2,7 @@ const express = require('express');
 
 const {
     register,
+    login,
     getAllUser,
     getOneUser,
     createUser,
@@ -12,6 +13,7 @@ const {
 const router = express.Router();
 
 router.post('/', register);
+router.post('/login', login);
 
 router
  .route('/')

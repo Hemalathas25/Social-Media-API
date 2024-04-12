@@ -3,6 +3,7 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const errorHandler = require('./middleware/error.js');
 const connectDB = require('./config/db.js');
 
@@ -16,6 +17,9 @@ connectDB();
 const user = require('./routes/auth.js');
 
 const app = express();
+
+// cookie parser
+app.use(cookieParser());
 
 //Parse JSON bodies for POST requests
 app.use(bodyParser.json());

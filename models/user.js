@@ -21,7 +21,7 @@ const UserSchema = new mongoose.Schema({
 
     password: {
         type: String,
-        //required: [true, 'Please add a password'],
+        required: [true, 'Please add a password'],
         minlength: 6,
         select: false,
     },
@@ -98,10 +98,26 @@ UserSchema.methods.getSignedJwtToken = function () {
 };
 
 // Match user entered password to hashed password in database
-UserSchema.methods.matchPassword = async function (enteredPassword) {
-    return await bcrypt.compare(enteredPassword, this.password);
-};
+// UserSchema.methods.matchPassword = async function (enteredPassword) {
+//     return await bcrypt.compare(enteredPassword, this.password);
+// };
   
+// Match user entered password to hashed password in database
+UserSchema.methods.matchPassword = async function (enteredPassword) {
+    // Log the entered password
+    console.log('Entered Password:', enteredPassword);
+
+    // Log the hashed password stored in the database
+    console.log('Stored Hashed Password:', this.password);
+
+    // Compare passwords and log the result
+    const isMatch = await bcrypt.compare(enteredPassword, this.password);
+    console.log('Password Match Result:', isMatch);
+
+    return isMatch;
+};
+
+
 // Generate and hash password token
 UserSchema.methods.getResetPasswordToken = function () {
 
